@@ -26,7 +26,9 @@ public class Interfaz {
                 codigo = lanzador.ejecutarNivel2(entrada);
             } else if (nivel.equals("3")){
                 codigo = lanzador.ejecutarNivel3(entrada);
-            } else{
+            } else if (nivel.equals("4")){
+                codigo = lanzador.ejecutarNivel4(entrada);
+            } else {
                 codigo = lanzador.ejecutarFactor(entrada);
             }
             System.out.println("Operación completada código de salida: " + codigo);

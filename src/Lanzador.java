@@ -14,34 +14,35 @@ public class Lanzador {
             return 1;
         }
     }
-        public int ejecutarNivel2(String numero){
 
-            try {
-                ProcessBuilder pb = new ProcessBuilder("factor", numero);
-                Process p = pb.start();
-                BufferedReader salidaOk = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                String linea;
+    public int ejecutarNivel2(String numero) {
 
-                while ((linea = salidaOk.readLine()) != null) {
-                    System.out.println("[OK] " + linea);
-                }
+        try {
+            ProcessBuilder pb = new ProcessBuilder("factor", numero);
+            Process p = pb.start();
+            BufferedReader salidaOk = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String linea;
 
-                BufferedReader salidaError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-                while ((linea = salidaError.readLine()) != null) {
-                    System.out.println("[ERROR] " + linea);
-                }
-                return p.waitFor();
-            } catch (Exception e) {
-                return 1;
+            while ((linea = salidaOk.readLine()) != null) {
+                System.out.println("[OK] " + linea);
             }
-        }
 
-        public int ejecutarNivel3(String numero){
-        try{
+            BufferedReader salidaError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            while ((linea = salidaError.readLine()) != null) {
+                System.out.println("[ERROR] " + linea);
+            }
+            return p.waitFor();
+        } catch (Exception e) {
+            return 1;
+        }
+    }
+
+    public int ejecutarNivel3(String numero) {
+        try {
             ProcessBuilder pb = new ProcessBuilder("factor", numero);
 
-            File ficheroSalida = new File ("factor_output.log");
-            File ficheroError = new File ("factor_error.log");
+            File ficheroSalida = new File("factor_output.log");
+            File ficheroError = new File("factor_error.log");
 
             pb.redirectOutput(ProcessBuilder.Redirect.appendTo(ficheroSalida));
             pb.redirectError(ProcessBuilder.Redirect.appendTo(ficheroError));
@@ -50,9 +51,42 @@ public class Lanzador {
             return p.waitFor();
 
         } catch (Exception e) {
-                return 1;
-        }
+            return 1;
         }
     }
 
+    public int ejecutarNivel4(String numero) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder("factor", numero);
+            Process p = pb.start();
+
+            BufferedReader salidaOk = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String lineaOk = salidaOk.readLine();
+
+            BufferedReader salidaError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String lineaError = salidaError.readLine();
+
+            int codigo = p.waitFor();
+
+            if (codigo == 0 && lineaOk != null) {
+                System.out.println(lineaOk);
+
+                String primoEsperado = numero.trim() + ": " + numero.trim();
+
+                if (lineaOk.trim().equals(primoEsperado)) {
+                    System.out.println(numero.trim() + " es primo");
+                } else {
+                    System.out.println(numero.trim() + " no es primo");
+                }
+            } else if (lineaError != null) {
+                System.out.println(lineaError);
+            }
+
+            return codigo;
+
+        } catch (Exception e){
+            return 1;
+        }
+    }
+}
 

@@ -7,9 +7,7 @@
 | **-5** | `factor: «-5» opción invalida` | `1` |
 
 En principio los errores que salen en la terminal, son errores de la propia consola de linux (lo que doy por entendido).
+Del nivel 1.
 
- File ficheroSalida = new File ("factor_output.log");
-            File ficheroError = new File ("factor_error.log");
-
-            pb.redirectOutput(ProcessBuilder.Redirect.appendTo(ficheroSalida));
-            pb.redirectError(ProcessBuilder.Redirect.appendTo(ficheroError));
+Otra cosa a comentar es que en la interfaz al elegir el numero podia haberlo hecho con un switch pero ya había
+escrito parte del código, podría solucionarlo con un bucle o una condición pero sería más complejo y ya no sería tan óptimo
